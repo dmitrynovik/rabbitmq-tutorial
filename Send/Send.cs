@@ -7,17 +7,18 @@ connection.ConnectionShutdown += (conn, reason) => Console.WriteLine("Connection
 
 using var channel = connection.CreateModel();
 
+ulong count = 0;
 channel.QueueDeclare(queue: "hello",
                      durable: true,
                      exclusive: false,
                      autoDelete: false,
                      arguments: null /* TODO: Quorum */);
 
-const string message = "Hello World!";
-var body = Encoding.UTF8.GetBytes(message);
-
 ConsoleKeyInfo key;
 do {
+    string message = $"Hello {++count}!";
+    var body = Encoding.UTF8.GetBytes(message);
+
     channel.BasicPublish(exchange: string.Empty,
                      routingKey: "hello",
                      basicProperties: null,
