@@ -24,7 +24,7 @@ do {
                      basicProperties: null,
                      body: body);
 
-    Console.WriteLine($" [x] Sent {message}");
+    Console.WriteLine($" [x] Sent: {message}");
     Console.WriteLine(" Press [enter] to exit or any other key to continue.");
     key = Console.ReadKey();
     
