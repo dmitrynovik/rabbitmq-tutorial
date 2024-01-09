@@ -1,11 +1,7 @@
 ﻿using System.Text;
 using RabbitMQ.Client;
 
-var factory = new ConnectionFactory
-{
-    HostName = "localhost",
-    AutomaticRecoveryEnabled = true
-};
+var factory = new ConnectionFactory { HostName = "localhost", AutomaticRecoveryEnabled = true };
 using var connection = factory.CreateConnection();
 connection.ConnectionShutdown += (conn, reason) => Console.WriteLine("Connection shut down because of: " + reason);
 
