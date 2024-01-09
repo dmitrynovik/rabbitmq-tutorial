@@ -8,10 +8,10 @@ connection.ConnectionShutdown += (conn, reason) => Console.WriteLine("Connection
 using var channel = connection.CreateModel();
 
 channel.QueueDeclare(queue: "hello",
-                     durable: false,
+                     durable: true,
                      exclusive: false,
                      autoDelete: false,
-                     arguments: null);
+                     arguments: null /* TODO: Quorum */);
 
 Console.WriteLine(" [*] Waiting for messages.");
 
@@ -21,9 +21,10 @@ consumer.Received += (model, ea) =>
     var body = ea.Body.ToArray();
     var message = Encoding.UTF8.GetString(body);
     Console.WriteLine($" [x] Received {message}");
+    channel.BasicAck(ea.DeliveryTag, false);
 };
 channel.BasicConsume(queue: "hello",
-                     autoAck: true,
+                     autoAck: false,
                      consumer: consumer);
 
 Console.WriteLine(" Press [enter] to exit.");

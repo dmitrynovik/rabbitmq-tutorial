@@ -8,10 +8,10 @@ connection.ConnectionShutdown += (conn, reason) => Console.WriteLine("Connection
 using var channel = connection.CreateModel();
 
 channel.QueueDeclare(queue: "hello",
-                     durable: false,
+                     durable: true,
                      exclusive: false,
                      autoDelete: false,
-                     arguments: null);
+                     arguments: null /* TODO: Quorum */);
 
 const string message = "Hello World!";
 var body = Encoding.UTF8.GetBytes(message);
